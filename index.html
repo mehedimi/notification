@@ -25,13 +25,20 @@
     </div>
     <script>
         var form =  document.getElementById('notification-form');
+        navigator.serviceWorker.register('sw.js')
         function sendNotification(text){
             if (window.Notification) {
+                
                 Notification.requestPermission().then(() => {
-                    new Notification("Notification", {
-                        body: text,
-                        icon: 'https://www.gravatar.com/avatar/a6ff8f131e5c3b4c04368428db7ad2c9?s=240x240'
+                    navigator.serviceWorker.ready.then((reg) => {
+                        reg.showNotification(text, {
+                            icon: 'https://www.gravatar.com/avatar/a6ff8f131e5c3b4c04368428db7ad2c9?s=240x240'
+                        });
                     })
+                    // new Notification("Notification", {
+                    //     body: text,
+                    //     icon: 'https://www.gravatar.com/avatar/a6ff8f131e5c3b4c04368428db7ad2c9?s=240x240'
+                    // })
                 })
             }else{
                 alert("Your browser doesn\'t support notification.");
